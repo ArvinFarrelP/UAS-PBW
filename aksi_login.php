@@ -1,29 +1,38 @@
 <?php
     include "koneksi.php";
 
-    $mail = $_POST['email'];
-    $pass = $_POST['password'];
+    // Pastikan inputan aman dari SQL Injection
+    $mail = isset($_POST['email']) ? trim($_POST['email']) : '';
+    $pass = isset($_POST['password']) ? trim($_POST['password']) : '';
 
-    $dbh = $koneksi->query("select * from user where email = '".$mail."'");
+    try {
+        // Siapkan query menggunakan prepared statement untuk keamanan
+        $stmt = $koneksi->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $mail, PDO::PARAM_STR);
+        $stmt->execute();
 
-        if($dbh->rowcount()==1)
-        {
-            $user = $dbh->fetch(PDO::FETCH_ASSOC);
+        // Cek apakah ada user dengan email yang diberikan
+        if ($stmt->rowCount() == 1) {
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if(password_verify($pass,$user['password']))
-            {
+            // Verifikasi password
+            if ($pass === $user['password']) { // Menggunakan string comparison karena password di database belum di-hash
                 session_start();
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['userid'] = $user['id'];
-                $_SESSION['isLoggedIn']=true;
-                header("location: homepage.php");
+                $_SESSION['isLoggedIn'] = true;
+
+                // Redirect ke homepage
+                header("Location: homepage.php");
+                exit;
+            } else {
+                echo "Password salah. Silakan cek kembali.";
             }
-            else
-            {
-                echo "Cek email dan Password"; 
-            }
+        } else {
+            echo "Email tidak ditemukan.";
         }
-        else
-         {
-            echo "User tidak ditemukan";
-        }
+    } catch (PDOException $e) {
+        // Menangkap error database untuk debugging
+        die("Terjadi kesalahan: " . $e->getMessage());
+    }
+?>
