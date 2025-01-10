@@ -2,7 +2,7 @@
 
 try{
     $koneksi = new PDO("mysql:host=localhost;
-    dbname=",'root','');
+    dbname=perpustakaan",'root','');
 }
 catch(PDOException $e){
     echo "Koneksi gagal", $e->getMessage();
