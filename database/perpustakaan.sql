@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2025 at 03:43 PM
+-- Generation Time: Jan 10, 2025 at 03:00 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,7 +37,8 @@ CREATE TABLE `buku` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_by` int(11) DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  `id_penulis` int(10) NOT NULL
+  `id_penulis` int(10) NOT NULL,
+  `isdel` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -48,7 +49,8 @@ CREATE TABLE `buku` (
 
 CREATE TABLE `penulis` (
   `id_penulis` int(10) NOT NULL,
-  `nama_penulis` varchar(255) NOT NULL
+  `nama_penulis` varchar(255) NOT NULL,
+  `negara` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -63,6 +65,13 @@ CREATE TABLE `users` (
   `email` varchar(200) NOT NULL,
   `password` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES
+(1, 'wahyu', 'wahyu123@gmail.com', '123');
 
 --
 -- Indexes for dumped tables
@@ -107,7 +116,7 @@ ALTER TABLE `penulis`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
