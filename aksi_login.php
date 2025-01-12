@@ -1,38 +1,26 @@
 <?php
-    include "koneksi.php";
+include "koneksi.php";
 
-    // Pastikan inputan aman dari SQL Injection
-    $mail = isset($_POST['email']) ? trim($_POST['email']) : '';
-    $pass = isset($_POST['password']) ? trim($_POST['password']) : '';
+$email = $_POST['email'];
+$password = $_POST['password'];
 
-    try {
-        // Siapkan query menggunakan prepared statement untuk keamanan
-        $stmt = $koneksi->prepare("SELECT * FROM users WHERE email = :email");
-        $stmt->bindParam(':email', $mail, PDO::PARAM_STR);
-        $stmt->execute();
+$dbh = $koneksi->query("select * from users where email = '" . $email . "'");
 
-        // Cek apakah ada user dengan email yang diberikan
-        if ($stmt->rowCount() == 1) {
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($dbh->rowcount() == 1) {
+    $users = $dbh->fetch(PDO::FETCH_ASSOC);
 
-            // Verifikasi password
-            if ($pass === $user['password']) { // Menggunakan string comparison karena password di database belum di-hash
-                session_start();
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['userid'] = $user['id'];
-                $_SESSION['isLoggedIn'] = true;
+    if (password_verify($password, $users['password'])) {
+        session_start();
+        $_SESSION['username'] = $users['username'];
+        $_SESSION['userid'] = $users['id'];
+        $_SESSION['isLoggedIn'] = true;
+        header("location: homepage.php");
 
-                // Redirect ke homepage
-                header("Location: homepage.php");
-                exit;
-            } else {
-                echo "Password salah. Silakan cek kembali.";
-            }
-        } else {
-            echo "Email tidak ditemukan.";
-        }
-    } catch (PDOException $e) {
-        // Menangkap error database untuk debugging
-        die("Terjadi kesalahan: " . $e->getMessage());
+        echo "<script>alert('selamat datang ".$users['username']."');</script>";
     }
+    else{
+        echo "<script>alert('password salah ".$users['username']."');</script>";
+    }
+}
+
 ?>

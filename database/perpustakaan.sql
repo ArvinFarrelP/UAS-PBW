@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 10, 2025 at 03:00 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost:3306
+-- Generation Time: Jan 12, 2025 at 08:35 AM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,17 +28,17 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `buku` (
-  `id` int(10) NOT NULL,
-  `judul` varchar(255) NOT NULL,
-  `tahun` int(4) NOT NULL,
-  `created_by` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `judul` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `tahun` int NOT NULL,
+  `created_by` int NOT NULL,
   `created_at` datetime NOT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `deleted_by` int(11) DEFAULT NULL,
+  `deleted_by` int DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  `id_penulis` int(10) NOT NULL,
-  `isdel` tinyint(1) NOT NULL DEFAULT 0
+  `id_penulis` int NOT NULL,
+  `isdel` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -48,9 +48,9 @@ CREATE TABLE `buku` (
 --
 
 CREATE TABLE `penulis` (
-  `id_penulis` int(10) NOT NULL,
-  `nama_penulis` varchar(255) NOT NULL,
-  `negara` varchar(255) NOT NULL
+  `id_penulis` int NOT NULL,
+  `nama_penulis` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `negara` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -60,10 +60,10 @@ CREATE TABLE `penulis` (
 --
 
 CREATE TABLE `users` (
-  `id` int(10) NOT NULL,
-  `username` varchar(200) NOT NULL,
-  `email` varchar(200) NOT NULL,
-  `password` varchar(200) NOT NULL
+  `id` int NOT NULL,
+  `username` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(200) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -71,7 +71,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES
-(1, 'wahyu', 'wahyu123@gmail.com', '123');
+(1, 'wahyu', 'wahyu123@gmail.com', '$2y$10$NDkxPyHmtYx9w7vRqbRh2eLi9do3.4fO0BXo8PqDiapYJ4VHRl2c6'),
+(2, 'arvin', 'arvin123@gmail.com', '$2y$10$tdcRhY2UBNw1l3HYDT9n7.82kOiwELV.k2zTE7Oq/iCj0kuz9tNZG'),
+(3, 'ali', 'ali123@gmail.com', '$2y$10$O.1T/GDskzjHRuNzb7BaLeufnsjK5nZjrR.yFJMUVjCF0Q01EQUdC');
 
 --
 -- Indexes for dumped tables
@@ -104,19 +106,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `buku`
 --
 ALTER TABLE `buku`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `penulis`
 --
 ALTER TABLE `penulis`
-  MODIFY `id_penulis` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_penulis` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
