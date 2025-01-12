@@ -32,6 +32,7 @@
      </select>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
+  <a href="homepage.php" class="btn btn-secondary">Kembali</a>
 </form>
 </body>
 </html>
