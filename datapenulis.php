@@ -42,14 +42,18 @@ include "koneksi.php";
                 $query = $koneksi->query("SELECT * FROM penulis");
                 $no = 1;
                 while ($penulis = $query->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr>
-                        <td>{$no}</td>
-                        <td>" . htmlspecialchars($penulis['nama_penulis']) . "</td>
-                        <td>" . htmlspecialchars($penulis['negara']) . "</td>
-                    </tr>";
-                    $no++;
-                }
                 ?>
+                    <tr>
+                    <th scope="row"><?php echo $no ?></th>
+                    <td><?php echo $penulis['nama_penulis'] ?></td>
+                    <td><?php echo $penulis['negara'] ?></td>
+                   
+                </tr>
+                <?php
+
+                $no++;
+             }
+                 ?>
             </tbody>
         </table>
         <a href="inputpenulis.php" class="btn btn-primary">Tambah Penulis</a>
