@@ -5,7 +5,7 @@
 
     if(!$_SESSION['isLoggedIn'])
     {
-        header("Location : login.php");
+        header("Location : index.php");
     }
 
     $id = $_GET['id'];
